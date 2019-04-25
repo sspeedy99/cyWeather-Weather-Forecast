@@ -3,8 +3,82 @@
 #include <string>
 #include <algorithm>
 #include <time.h>
+#include <ctime>
 using namespace std;
 
+/* Required for current time details */
+time_t t = time(NULL);
+tm* timePtr = localtime(&t);
+
+/*Abstract Forecast Class */
+class Forecast{
+public:
+  float currentTemprature;
+  float maximumTemprature;
+  float minimumTemprature;
+  float averageTemprature;
+  float humidity;
+  float rainfall;
+  string summary;
+
+  virtual void getAvgTemp() = 0;
+  virtual void getAvgRain() = 0;
+  virtual void showStats() = 0;
+  virtual void predict() = 0;
+
+};
+
+/*Day Forecast Class */
+class DayForecast:public Forecast
+{
+private:
+  int date = timePtr->tm_mday ;
+public:
+  void getAvgTemp () {
+    cout<<"Average Temprature of the day is  :"<<this->averageTemprature<<endl;
+  }
+  void getAvgRain () {
+    cout<<"Average Temprature of the day is  :"<<this->rainfall<<endl;
+  }
+  void showStats() {
+        cout<<"Today is :"<<this->date;
+        cout<<"Current Temprature : "<<this->currentTemprature<<endl;
+		    cout<<"Maximum Temprature : "<<this->maximumTemprature<<endl;
+		    cout<<"Minimum Temprature : "<<this->minimumTemprature<<endl;
+		    cout<<"Average Temprature : "<<this->averageTemprature<<endl;
+		    cout<<"Humidity : "<<this->humidity<<endl;
+		    cout<<"Rainfall in Past 12 hours : "<<this->rainfall<<endl;
+  }
+  void predict() {
+    cout<<this->summary<<endl;
+  }
+};
+
+/*Month Forecast Class */
+class MonthForecast:public Forecast
+{
+private:
+  int Month = timePtr->tm_mon ;
+public:
+  void getAvgTemp () {
+    cout<<"Average Temprature of the day is  :"<<this->averageTemprature<<endl;
+  }
+  void getAvgRain () {
+    cout<<"Average Temprature of the day is  :"<<this->rainfall<<endl;
+  }
+  void showStats() {
+        cout<<"The Month is :"<<this->Month;
+        cout<<"Current Temprature : "<<this->currentTemprature<<endl;
+		    cout<<"Maximum Temprature : "<<this->maximumTemprature<<endl;
+		    cout<<"Minimum Temprature : "<<this->minimumTemprature<<endl;
+		    cout<<"Average Temprature : "<<this->averageTemprature<<endl;
+		    cout<<"Humidity : "<<this->humidity<<endl;
+		    cout<<"Rainfall in Past 12 hours : "<<this->rainfall<<endl;
+  }
+  void predict() {
+    cout<<this->summary<<endl;
+  }
+};
 
 /* Abstract State class */
 class State
@@ -13,7 +87,7 @@ public:
   int lattitude;
   int longitude;
 
-   void getCoordinates();
+  virtual void getCoordinates(int, int) = 0;
 };
 
 /*City class will inherit the State class */
@@ -22,7 +96,6 @@ class City: public State
 private:
   string city_name;
 public:
-
   /* City not found exception */
   class CityNotFoundException
   {
@@ -74,7 +147,16 @@ public:
   {
     cout<<"City Name : "<<this->city_name<<endl;
   }
+
+  void getCoordinates(int lat_val, int long_val)
+  {
+      this->lattitude = lat_val;
+      this->longitude = long_val;
+  }
+
 };
+
+
 
 
 /* User Details for no of active users using the software and further improvemnet */

@@ -1,5 +1,5 @@
-# CyWeather
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# CyWeather  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 CyWeather is a command line real-time weather application written in C++.
 
 ## Working
